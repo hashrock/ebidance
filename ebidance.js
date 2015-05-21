@@ -6,12 +6,7 @@ if (Meteor.isClient) {
       el: "#main",
       data: {
         title: "Test #1",
-        name: "",
-        tickets: [
-            {name: "test"},
-            {name: "test1"},
-            {name: "test2"}
-        ]
+        name: ""
       },
       sync: {
         'tickets': function() {
