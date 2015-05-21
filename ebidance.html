@@ -1,0 +1,67 @@
+<head>
+  <title>ebidance</title>
+  <style>
+    .list__ticket{
+      position: relative;
+    }
+    
+    .ticket__nav{
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .ticket--ng{
+      background: #FFCCCC;
+    }
+    .ticket--done{
+      background: #CCCCCC;
+    }
+    .list{
+      margin: 10px;
+      padding: 10px;
+    }
+    
+    .paper {
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+    }
+  </style>
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+  <div id="main">
+    <div class="index">
+      <div v-repeat="index: indexes">
+        [[index.id]] [[index.name]]
+      </div>
+        <input v-model="indexId">
+        <input v-model="indexName" v-on="keyup: addTicket(name) | key enter">
+    </div>
+    
+    <h1 v-text="title"></h1>
+      <button>Add Paper</button>
+    <div class="list paper">
+
+      <div class="list__ticket" v-repeat="ticket: tickets" v-class="ticket--todo: ticket.status==='', ticket--ng: ticket.status==='NG', ticket--done: ticket.status==='OK'">
+        <div v-text="ticket.name"></div>
+        <div class="ticket__nav">
+          <button v-on="click: setStatus(ticket._id, 'OK')">OK</button>
+          <button v-on="click: setStatus(ticket._id, 'NG')">NG</button>
+          <button v-on="click: setStatus(ticket._id, 'OTHER')">Other</button>
+        </div>
+      </div>
+
+      <div>
+        <form v-on="submit: addTicket">
+          <input v-model="name">
+          <input type="submit" value="Add">
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+
