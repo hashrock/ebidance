@@ -9,19 +9,38 @@
 <template name="main">
   <div id="main">
     <div class="index">
-      <div v-repeat="index: indexes">
-        [[index.id]] [[index.name]]
+      <div v-repeat="index: boards">
+        [[index.indexId]] [[index.name]]
+        <ul v-repeat="ticket: index.tickets">
+          <li v-text="ticket.name"></li>
+        </ul>
+        <div>
+        </div>
+        
       </div>
         <input v-model="indexId">
         <input v-model="indexName" v-on="keyup: addTicket(name) | key enter">
     </div>
     
     <h1 v-text="title"></h1>
-      <button>Add Paper</button>
+      <button v-on="click: addIndex">Add Paper</button>
+        
+    <ul>
+    </ul>
+    <div class="list paper"  v-repeat="index: indexes">
+      <h2>[[index.name]]</h2>
+      <form v-on="submit: addTicket($event, index._name, index._id)">
+        <input v-model="index._name">
+        <input type="submit" value="Add">
+      </form>
+    </div>
+        
+        
     <div class="list paper">
 
       <div class="list__ticket" v-repeat="ticket: tickets" v-class="ticket--todo: ticket.status==='', ticket--ng: ticket.status==='NG', ticket--done: ticket.status==='OK'">
         <div v-text="ticket.name"></div>
+        <div v-text="ticket.indexId"></div>
         <div class="ticket__nav">
           <button v-on="click: setStatus(ticket._id, 'OK')">OK</button>
           <button v-on="click: setStatus(ticket._id, 'NG')">NG</button>
